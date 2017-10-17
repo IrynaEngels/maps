@@ -116,10 +116,12 @@ public class TrackingGuideFragment extends Fragment {
 
         googleMap.setOnMarkerClickListener(marker ->{
             LatLng markerLL = marker.getPosition();
-            realmReminder.readeReminders(context).stream()
-                    .filter(e -> markerLL.latitude == e.getLatitude() && markerLL.longitude == e.getLongitude())
-                    .forEach(e -> realmReminder.removeReminder(getActivity(), e.getId()));
             marker.remove();
+            for (LatLng ll: list){
+                if(markerLL.latitude==ll.latitude&&markerLL.longitude==ll.longitude)
+                    realmReminder.removeReminder(getActivity(), ll.latitude, ll.longitude);
+            }
+
             return true;});
     }
 

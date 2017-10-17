@@ -75,13 +75,13 @@ public class RealmReminder{
     }
 
 
-    public void removeReminder(Context context, long id) {
+    public void removeReminder(Context context, double latitude, double longitude/*long id*/) {
         Realm realm = init(context);
         File realmFile = new File(context.getFilesDir(), "reminder.realm");
         assert realm != null;
         try {
             MyMarker reminder = realm.where(MyMarker.class)
-                    .equalTo("id", id).findFirst();
+                    .equalTo("latitude", latitude).equalTo("longitude", longitude).findFirst();
             if(reminder!=null) {
                 realm.beginTransaction();
                 reminder.deleteFromRealm();
